@@ -1,0 +1,49 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Paint
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-SymbolicName: org.foo.paint
+Bundle-Version: 1.0.0.qualifier
+Created-By: iPOJO  1.8.0
+Import-Package: javax.swing, org.apache.felix.ipojo;version=1.8.0, org
+ .apache.felix.ipojo.architecture;version=1.8.0, org.foo.fundation, or
+ g.foo.shape, org.osgi.framework;version=1.3.0, org.osgi.service.cm;ve
+ rsion=1.2, org.osgi.service.log;version=1.3, org.osgi.util.tracker;ve
+ rsion=1.5.0
+iPOJO-Components: instance { $component="org.foo.paint.PaintMain" }ins
+ tance { $component="org.foo.paint.ShapeTracker" }component { $classna
+ me="org.foo.paint.PaintMain" $name="org.foo.paint.PaintMain" $public=
+ "true" provides { $specifications="{org.foo.paint.IPaintMain}" }requi
+ res { $field="pLogger" }callback { $transition="invalidate" $method="
+ invalidate" }callback { $transition="validate" $method="validate" }ma
+ nipulation { interface { $name="java.lang.Runnable" }interface { $nam
+ e="org.foo.paint.IPaintMain" }field { $name="pBundleContext" $type="o
+ rg.osgi.framework.BundleContext" }field { $name="pLogger" $type="org.
+ foo.fundation.ILogger" }field { $name="pPaintFrame" $type="org.foo.pa
+ int.PaintFrame" }method { $name="getContext" $return="org.osgi.framew
+ ork.BundleContext" }method { $name="getPaintFrame" $return="org.foo.p
+ aint.PaintFrame" }method { $name="invalidate" }method { $name="run" }
+ method { $name="validate" }}}component { $classname="org.foo.paint.Sh
+ apeTracker" $name="org.foo.paint.ShapeTracker" $public="true" require
+ s { $field="pLogger" }requires { $field="pPaintMain" }callback { $tra
+ nsition="invalidate" $method="invalidate" }callback { $transition="va
+ lidate" $method="validate" }manipulation { $super="org.osgi.util.trac
+ ker.ServiceTracker" field { $name="pBundleContext" $type="org.osgi.fr
+ amework.BundleContext" }field { $name="pLogger" $type="org.foo.fundat
+ ion.ILogger" }field { $name="pPaintMain" $type="org.foo.paint.IPaintM
+ ain" }method { $name="addingService" $return="org.foo.shape.ISimpleSh
+ ape" $arguments="{org.osgi.framework.ServiceReference}" }method { $na
+ me="getContext" $return="org.osgi.framework.BundleContext" }method { 
+ $name="invalidate" }method { $name="modifiedService" $arguments="{org
+ .osgi.framework.ServiceReference,org.foo.shape.ISimpleShape}" }method
+  { $name="processShape" $arguments="{int,org.osgi.framework.ServiceRe
+ ference,org.foo.shape.ISimpleShape}" }method { $name="processShapeOnE
+ ventThread" $arguments="{int,org.osgi.framework.ServiceReference,org.
+ foo.shape.ISimpleShape}" }method { $name="removedService" $arguments=
+ "{org.osgi.framework.ServiceReference,org.foo.shape.ISimpleShape}" }m
+ ethod { $name="validate" }method { $name="removedService" $arguments=
+ "{org.osgi.framework.ServiceReference,java.lang.Object}" }method { $n
+ ame="modifiedService" $arguments="{org.osgi.framework.ServiceReferenc
+ e,java.lang.Object}" }method { $name="addingService" $return="java.la
+ ng.Object" $arguments="{org.osgi.framework.ServiceReference}" }}}
+

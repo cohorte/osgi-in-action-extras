@@ -1,0 +1,131 @@
+
+
+
+integer exception
+
+
+When a lauch configuration contains a bundle with its version number  like below the method "parseBundleList(...)" of the class "ApacheFelixLaunchConfiguration" throws an FormatNumberException in line 349
+
+e.g. 
+<stringAttribute key="workspace_bundles" value="org.foo.paint*1.0.0.qualifier@8:default,org.foo.shape.circle@7:default,org.foo.shape.square@7:default,org.foo.shape.triangle@7:default,org.foo.shape@6:default,org.psem2m.utilities@5:default"/>
+
+
+the configuration files is in the folder :
+
+<workspace>/.metadata/.plugins/.org.eclipse.debug.core/.launches
+
+
+The source code of the class "ApacheFelixLaunchConfiguration"
+
+https://code.google.com/p/felix-eclipse/source/browse/trunk/au.com.forge.felix.eclipse.launch_configuration/src/au/com/forge/eclipse/pde/impl/ApacheFelixLaunchConfiguration.java?r=24
+
+
+        /**
+         * Parse the list of bundles.
+         * 
+         * @param defaultStartLevel
+         *            The default start level.
+         * @param defaultAutoStart
+         *            A boolean indicating if bundles should be auto-started.
+         * @param targetPlugins
+         *            The list of plugins in the target, specified as plugin
+         *            identifiers
+         * @param startLevelBundles
+         *            The map of start level => bundles (bundles which start
+         *            automatically)
+         * @param installLevelBundles
+         *            The map of install level => bundles (bundles which are to be
+         *            installed only)
+         * @param protocol
+         *            The protocol used to launch the plugin.
+         * @throws CoreException
+         *             Thrown when an error occurs parsing the target platform
+         *             plugin names.
+         */
+        private void parseBundleList(Integer defaultStartLevel,
+                        boolean defaultAutoStart, String[] targetPlugins,
+                        Map startLevelBundles, Map installLevelBundles, String protocol)
+                        throws CoreException {
+                for (int i = 0; i < targetPlugins.length; i++) {
+                        String[] componentParts = targetPlugins[i].split("@|:|\\*", 4);
+                        final String bundleName = componentParts[0];
+                        Integer startLevel;
+                        boolean autostart;
+                        String version;
+                        if (componentParts.length == 4)
+                        {
+                                version = componentParts[1];
+                                
+                                autostart = componentParts[3].equals("default") ? defaultAutoStart
+                                                : Boolean.valueOf(componentParts[2]).booleanValue();     <====== 3 !
+
+                                startLevel = componentParts[2].equals("default") ? defaultStartLevel 
+                                                : Integer.valueOf(componentParts[1]);                    <======  2 !
+                        }
+                        else if (componentParts.length == 3)
+                        {
+                                autostart = componentParts[2].equals("default") ? defaultAutoStart
+                                                : Boolean.valueOf(componentParts[2]).booleanValue();
+
+                                startLevel = componentParts[1].equals("default") ? defaultStartLevel
+                                                : Integer.valueOf(componentParts[1]);
+                                version = null;
+                        }
+                        else // (componentParts.length < 3)
+                                throw new CoreException(new Status(Status.CANCEL, PLUGIN_ID,
+                                                "Problem parsing target/workspace bundle strings."));
+
+                        
+                        List bundles;
+                        if (autostart) {
+                                bundles = (List) startLevelBundles.get(startLevel);
+                                if (bundles == null) {
+                                        bundles = new ArrayList();
+                                        startLevelBundles.put(startLevel, bundles);
+                                }
+                        } else {
+                                bundles = (List) installLevelBundles.get(startLevel);
+                                if (bundles == null) {
+                                        bundles = new ArrayList();
+                                        installLevelBundles.put(startLevel, bundles);
+                                }
+                        }
+
+                        IPluginModelBase pluginModelBase = findBundleModel(bundleName, version);
+                        bundles.add(protocol + ":" + pluginModelBase.getInstallLocation());
+                }
+        }
+
+
+
+
+
+
+
+
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<launchConfiguration type="org.eclipse.pde.ui.EquinoxLauncher">
+<booleanAttribute key="append.args" value="true"/>
+<booleanAttribute key="automaticAdd" value="true"/>
+<booleanAttribute key="automaticValidate" value="false"/>
+<stringAttribute key="bootstrap" value=""/>
+<stringAttribute key="checked" value="[NONE]"/>
+<booleanAttribute key="clearConfig" value="true"/>
+<stringAttribute key="configLocation" value="${workspace_loc}/app-paint"/>
+<booleanAttribute key="default" value="true"/>
+<booleanAttribute key="default_auto_start" value="true"/>
+<intAttribute key="default_start_level" value="4"/>
+<booleanAttribute key="includeOptional" value="true"/>
+<stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="-os ${target.os} -ws ${target.ws} -arch ${target.arch} -nl ${target.nl} -consoleLog -console"/>
+<stringAttribute key="org.eclipse.jdt.launching.SOURCE_PATH_PROVIDER" value="org.eclipse.pde.ui.workbenchClasspathProvider"/>
+<stringAttribute key="org.eclipse.jdt.launching.VM_ARGUMENTS" value="-Declipse.ignoreApp=true -Dosgi.noShutdown=true&#10;-Djava.specification.version=1.6"/>
+<stringAttribute key="org.eclipse.jdt.launching.WORKING_DIRECTORY" value="${workspace_loc:app-paint}"/>
+<stringAttribute key="osgi_framework_id" value="org.apache.felix"/>
+<stringAttribute key="pde.version" value="3.3"/>
+<booleanAttribute key="show_selected_only" value="false"/>
+<stringAttribute key="target_bundles" value="org.apache.felix.gogo.command@default:default,org.apache.felix.gogo.runtime@default:default,org.apache.felix.gogo.shell@default:default,org.apache.felix.http.bundle@default:default,org.apache.felix.ipojo@default:default,org.apache.felix.log@default:default,org.apache.felix.main@default:default"/>
+<booleanAttribute key="tracing" value="false"/>
+<booleanAttribute key="useCustomFeatures" value="false"/>
+<booleanAttribute key="useDefaultConfigArea" value="false"/>
+<stringAttribute key="workspace_bundles" value="org.foo.paint*1.0.0.qualifier@8:default,org.foo.shape.circle@7:default,org.foo.shape.square@7:default,org.foo.shape.triangle@7:default,org.foo.shape@6:default,org.psem2m.utilities@5:default"/>
+</launchConfiguration>

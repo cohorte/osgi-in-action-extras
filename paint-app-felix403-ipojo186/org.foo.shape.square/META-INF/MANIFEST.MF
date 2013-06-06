@@ -1,0 +1,26 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Square
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-SymbolicName: org.foo.shape.square
+Bundle-Version: 1.0.0.qualifier
+Created-By: iPOJO  1.8.0
+Import-Package: javax.swing, org.apache.felix.ipojo;version=1.8.0, org
+ .apache.felix.ipojo.architecture;version=1.8.0, org.foo.fundation, or
+ g.foo.shape, org.osgi.framework;version=1.3.0, org.osgi.service.cm;ve
+ rsion=1.2, org.osgi.service.log;version=1.3
+iPOJO-Components: instance { $component="org.foo.shape.square.Square" 
+ }component { $classname="org.foo.shape.square.Square" $name="org.foo.
+ shape.square.Square" $public="true" provides { property { $name="simp
+ le.shape.icon" $field="pIconName" $value="square.png" }property { $na
+ me="simple.shape.name" $field="pName" $value="Square" }}requires { $f
+ ield="pLogger" }callback { $transition="invalidate" $method="invalida
+ te" }callback { $transition="validate" $method="validate" }manipulati
+ on { interface { $name="org.foo.shape.ISimpleShape" }field { $name="p
+ Icon" $type="javax.swing.ImageIcon" }field { $name="pIconName" $type=
+ "java.lang.String" }field { $name="pLogger" $type="org.foo.fundation.
+ ILogger" }field { $name="pName" $type="java.lang.String" }method { $n
+ ame="draw" $arguments="{java.awt.Graphics2D,java.awt.Point}" }method 
+ { $name="getIcon" $return="javax.swing.ImageIcon" }method { $name="in
+ validate" }method { $name="validate" }}}
+

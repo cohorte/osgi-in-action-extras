@@ -6,85 +6,130 @@ Bundle-SymbolicName: org.foo.fundation
 Bundle-Version: 1.0.0.qualifier
 Created-By: iPOJO  1.8.0
 Export-Package: javax.swing,org.foo.fundation
-Import-Package: org.apache.felix.ipojo;version=1.8.0, org.apache.felix
- .ipojo.architecture;version=1.8.0, org.osgi.framework;version=1.6.0, 
- org.osgi.service.cm;version=1.2, org.osgi.service.log;version=1.3.0
-iPOJO-Components: instance { $component="org.foo.fundation.Logger" }in
- stance { $component="org.foo.fundation.OsgiSpyBundles" }instance { $c
- omponent="org.foo.fundation.OsgiSpyFramework" }instance { $component=
- "org.foo.fundation.OsgiSpyServices" }component { $classname="org.foo.
- fundation.Logger" $name="org.foo.fundation.Logger" $public="true" pro
- vides { }requires { $field="pLogReaderService" $optional="true" $id="
- LogReader" callback { $method="bindLogReaderService" $type="bind" }ca
- llback { $method="unbindLogReaderService" $type="unbind" }}requires {
-  $field="pLogService" $optional="true" $id="LogService" callback { $m
- ethod="bindLogService" $type="bind" }callback { $method="unbindLogSer
- vice" $type="unbind" }}callback { $transition="invalidate" $method="i
- nvalidate" }callback { $transition="validate" $method="validate" }man
- ipulation { interface { $name="org.foo.fundation.ILogger" }field { $n
- ame="pCurrentLogLevel" $type="int" }field { $name="pLogReaderService"
-  $type="org.osgi.service.log.LogReaderService" }field { $name="pLogSe
- rvice" $type="org.osgi.service.log.LogService" }field { $name="pLogSe
- rviceAvailable" $type="boolean" }field { $name="pLogWriterStdout" $ty
- pe="org.foo.fundation.LogWriterStdout" }method { $name="buildLogLine"
-  $return="java.lang.String" $arguments="{java.lang.Thread,java.lang.O
- bject,java.lang.CharSequence,java.lang.Object[]}" }method { $name="bu
- ildLogText" $return="java.lang.String" $arguments="{java.lang.Object[
- ]}" }method { $name="buildWhoObjectId" $return="java.lang.String" $ar
- guments="{java.lang.Object}" }method { $name="formatLine" $return="ja
- va.lang.String" $arguments="{java.lang.String,java.lang.String,java.l
- ang.String,java.lang.String}" }method { $name="formatText" $return="j
- ava.lang.String" $arguments="{java.lang.String}" }method { $name="for
- matThreadName" $return="java.lang.String" $arguments="{java.lang.Stri
- ng}" }method { $name="formatThrowable" $return="java.lang.String" $ar
- guments="{java.lang.Throwable}" }method { $name="formatWhat" $return=
- "java.lang.String" $arguments="{java.lang.String}" }method { $name="f
- ormatWho" $return="java.lang.String" $arguments="{java.lang.String}" 
- }method { $name="bindLogReaderService" $arguments="{org.osgi.service.
- log.LogReaderService,java.util.Dictionary}" }method { $name="bindLogS
- ervice" $arguments="{org.osgi.service.log.LogService,java.util.Dictio
- nary}" }method { $name="invalidate" }method { $name="isLogDebugOn" $r
- eturn="boolean" }method { $name="isLogErrorOn" $return="boolean" }met
- hod { $name="isLoggable" $return="boolean" $arguments="{int}" }method
-  { $name="isLogInfoOn" $return="boolean" }method { $name="isLogServic
- eAvailable" $return="boolean" }method { $name="isLogWarningOn" $retur
- n="boolean" }method { $name="log" $arguments="{int,java.lang.Object,j
- ava.lang.CharSequence,java.lang.Object[]}" }method { $name="logDebug"
-  $arguments="{java.lang.Object,java.lang.CharSequence,java.lang.Objec
- t[]}" }method { $name="logInfo" $arguments="{java.lang.Object,java.la
- ng.CharSequence,java.lang.Object[]}" }method { $name="logSevere" $arg
- uments="{java.lang.Object,java.lang.CharSequence,java.lang.Object[]}"
-  }method { $name="logWarn" $arguments="{java.lang.Object,java.lang.Ch
- arSequence,java.lang.Object[]}" }method { $name="setLogLevel" $argume
- nts="{int}" }method { $name="setLogServiceAvailable" $arguments="{boo
- lean}" }method { $name="unbindLogReaderService" $arguments="{org.osgi
- .service.log.LogReaderService,java.util.Dictionary}" }method { $name=
- "unbindLogService" $arguments="{org.osgi.service.log.LogService,java.
- util.Dictionary}" }method { $name="validate" }}}component { $classnam
- e="org.foo.fundation.OsgiSpyBundles" $name="org.foo.fundation.OsgiSpy
- Bundles" $public="true" requires { $field="pLogger" }callback { $tran
- sition="invalidate" $method="invalidate" }callback { $transition="val
- idate" $method="validate" }manipulation { interface { $name="org.osgi
- .framework.BundleListener" }field { $name="pBundleContext" $type="org
- .osgi.framework.BundleContext" }field { $name="pLogger" $type="org.fo
- o.fundation.ILogger" }method { $name="bundleChanged" $arguments="{org
- .osgi.framework.BundleEvent}" }method { $name="invalidate" }method { 
- $name="validate" }}}component { $classname="org.foo.fundation.OsgiSpy
- Framework" $name="org.foo.fundation.OsgiSpyFramework" $public="true" 
- requires { $field="pLogger" }callback { $transition="invalidate" $met
- hod="invalidate" }callback { $transition="validate" $method="validate
- " }manipulation { interface { $name="org.osgi.framework.FrameworkList
- ener" }field { $name="pBundleContext" $type="org.osgi.framework.Bundl
- eContext" }field { $name="pLogger" $type="org.foo.fundation.ILogger" 
- }method { $name="frameworkEvent" $arguments="{org.osgi.framework.Fram
- eworkEvent}" }method { $name="invalidate" }method { $name="validate" 
- }}}component { $classname="org.foo.fundation.OsgiSpyServices" $name="
- org.foo.fundation.OsgiSpyServices" $public="true" requires { $field="
- pLogger" }callback { $transition="invalidate" $method="invalidate" }c
- allback { $transition="validate" $method="validate" }manipulation { i
- nterface { $name="org.osgi.framework.ServiceListener" }field { $name=
- "pBundleContext" $type="org.osgi.framework.BundleContext" }field { $n
- ame="pLogger" $type="org.foo.fundation.ILogger" }method { $name="inva
- lidate" }method { $name="serviceChanged" $arguments="{org.osgi.framew
- ork.ServiceEvent}" }method { $name="validate" }}}
+Import-Package: org.apache.felix.ipojo;version=1.8.0, org.apache.felix.i
+ pojo.architecture;version=1.8.0, org.apache.felix.service.command;versi
+ on=0.16.2;status=provisional, org.osgi.framework;version=1.6.0, org.osg
+ i.service.cm;version=1.2, org.osgi.service.log;version=1.3.0
+iPOJO-Components: instance { $name="org.foo.fundation.Logger" $component
+ ="org.foo.fundation.Logger-factory" }instance { $name="org.foo.fundatio
+ n.OsgiSpyBundles" $component="org.foo.fundation.OsgiSpyBundles-factory"
+  }instance { $name="org.foo.fundation.OsgiSpyFramework" $component="org
+ .foo.fundation.OsgiSpyFramework-factory" }instance { $name="org.foo.fun
+ dation.OsgiSpyServices" $component="org.foo.fundation.OsgiSpyServices-f
+ actory" }instance { $name="org.foo.fundation.gogo.FelixPlusCommand" $co
+ mponent="org.foo.fundation.gogo.FelixPlusCommand-factory" }component { 
+ $name="org.foo.fundation.Logger-factory" $classname="org.foo.fundation.
+ Logger" provides { $specifications="{org.foo.fundation.ILogger}" }requi
+ res { $field="pLogReaderService" $optional="true" $id="LogReader" callb
+ ack { $method="bindLogReaderService" $type="bind" }callback { $method="
+ unbindLogReaderService" $type="unbind" }}requires { $field="pLogService
+ " $optional="true" $id="LogService" callback { $method="bindLogService"
+  $type="bind" }callback { $method="unbindLogService" $type="unbind" }}c
+ allback { $transition="invalidate" $method="invalidate" }callback { $tr
+ ansition="validate" $method="validate" }manipulation { $classname="org.
+ foo.fundation.Logger" interface { $name="org.foo.fundation.ILogger" }fi
+ eld { $name="pCurrentLogLevel" $type="int" }field { $name="pLogReaderSe
+ rvice" $type="org.osgi.service.log.LogReaderService" }field { $name="pL
+ ogService" $type="org.osgi.service.log.LogService" }field { $name="pLog
+ ServiceAvailable" $type="boolean" }field { $name="pLogWriterStdout" $ty
+ pe="org.foo.fundation.LogWriterStdout" }method { $name="buildLogLine" $
+ return="java.lang.String" $arguments="{java.lang.Thread,java.lang.Objec
+ t,java.lang.CharSequence,java.lang.Object[]}" $names="{aWho,aWhat,aInfo
+ s,wLogText}" }method { $name="buildLogText" $return="java.lang.String" 
+ $arguments="{java.lang.Object[]}" $names="{wSB}" }method { $name="build
+ WhoObjectId" $return="java.lang.String" $arguments="{java.lang.Object}"
+  $names="{}" }method { $name="formatLine" $return="java.lang.String" $a
+ rguments="{java.lang.String,java.lang.String,java.lang.String,java.lang
+ .String}" $names="{aSourceClassName,aSourceMethodName,aText,wSB}" }meth
+ od { $name="formatText" $return="java.lang.String" $arguments="{java.la
+ ng.String}" $names="{}" }method { $name="formatThreadName" $return="jav
+ a.lang.String" $arguments="{java.lang.String}" $names="{}" }method { $n
+ ame="formatThrowable" $return="java.lang.String" $arguments="{java.lang
+ .Throwable}" $names="{}" }method { $name="formatWhat" $return="java.lan
+ g.String" $arguments="{java.lang.String}" $names="{}" }method { $name="
+ formatWho" $return="java.lang.String" $arguments="{java.lang.String}" $
+ names="{}" }method { $name="bindLogReaderService" $arguments="{org.osgi
+ .service.log.LogReaderService,java.util.Dictionary}" $names="{aLogReade
+ rService,properties}" }method { $name="bindLogService" $arguments="{org
+ .osgi.service.log.LogService,java.util.Dictionary}" $names="{aLogServic
+ e,properties}" }method { $name="invalidate" }method { $name="isLogDebug
+ On" $return="boolean" }method { $name="isLogErrorOn" $return="boolean" 
+ }method { $name="isLoggable" $return="boolean" $arguments="{int}" $name
+ s="{aLevel}" }method { $name="isLogInfoOn" $return="boolean" }method { 
+ $name="isLogServiceAvailable" $return="boolean" }method { $name="isLogW
+ arningOn" $return="boolean" }method { $name="log" $arguments="{int,java
+ .lang.Object,java.lang.CharSequence,java.lang.Object[]}" $names="{aLeve
+ l,aWho,aWhat,aInfos}" }method { $name="logDebug" $arguments="{java.lang
+ .Object,java.lang.CharSequence,java.lang.Object[]}" $names="{aWho,aWhat
+ ,aInfos}" }method { $name="logInfo" $arguments="{java.lang.Object,java.
+ lang.CharSequence,java.lang.Object[]}" $names="{aWho,aWhat,aInfos}" }me
+ thod { $name="logSevere" $arguments="{java.lang.Object,java.lang.CharSe
+ quence,java.lang.Object[]}" $names="{aWho,aWhat,aInfos}" }method { $nam
+ e="logWarn" $arguments="{java.lang.Object,java.lang.CharSequence,java.l
+ ang.Object[]}" $names="{aWho,aWhat,aInfos}" }method { $name="setLogLeve
+ l" $arguments="{int}" $names="{aLevel}" }method { $name="setLogServiceA
+ vailable" $arguments="{boolean}" $names="{aAvailable}" }method { $name=
+ "unbindLogReaderService" $arguments="{org.osgi.service.log.LogReaderSer
+ vice,java.util.Dictionary}" $names="{aLogReaderService,properties}" }me
+ thod { $name="unbindLogService" $arguments="{org.osgi.service.log.LogSe
+ rvice,java.util.Dictionary}" $names="{aLogService,properties}" }method 
+ { $name="validate" }}}component { $name="org.foo.fundation.OsgiSpyBundl
+ es-factory" $classname="org.foo.fundation.OsgiSpyBundles" requires { $f
+ ield="pLogger" }callback { $transition="invalidate" $method="invalidate
+ " }callback { $transition="validate" $method="validate" }manipulation {
+  $classname="org.foo.fundation.OsgiSpyBundles" interface { $name="org.o
+ sgi.framework.BundleListener" }field { $name="pBundleContext" $type="or
+ g.osgi.framework.BundleContext" }field { $name="pLogger" $type="org.foo
+ .fundation.ILogger" }method { $name="bundleChanged" $arguments="{org.os
+ gi.framework.BundleEvent}" $names="{aBundleEvent}" }method { $name="inv
+ alidate" }method { $name="validate" }}}component { $name="org.foo.funda
+ tion.OsgiSpyFramework-factory" $classname="org.foo.fundation.OsgiSpyFra
+ mework" requires { $field="pLogger" }callback { $transition="invalidate
+ " $method="invalidate" }callback { $transition="validate" $method="vali
+ date" }manipulation { $classname="org.foo.fundation.OsgiSpyFramework" i
+ nterface { $name="org.osgi.framework.FrameworkListener" }field { $name=
+ "pBundleContext" $type="org.osgi.framework.BundleContext" }field { $nam
+ e="pLogger" $type="org.foo.fundation.ILogger" }method { $name="framewor
+ kEvent" $arguments="{org.osgi.framework.FrameworkEvent}" $names="{aFram
+ eworkEvent}" }method { $name="invalidate" }method { $name="validate" }}
+ }component { $name="org.foo.fundation.OsgiSpyServices-factory" $classna
+ me="org.foo.fundation.OsgiSpyServices" requires { $field="pLogger" }cal
+ lback { $transition="invalidate" $method="invalidate" }callback { $tran
+ sition="validate" $method="validate" }manipulation { $classname="org.fo
+ o.fundation.OsgiSpyServices" interface { $name="org.osgi.framework.Serv
+ iceListener" }field { $name="pBundleContext" $type="org.osgi.framework.
+ BundleContext" }field { $name="pLogger" $type="org.foo.fundation.ILogge
+ r" }method { $name="invalidate" }method { $name="serviceChanged" $argum
+ ents="{org.osgi.framework.ServiceEvent}" $names="{aServiceEvent}" }meth
+ od { $name="validate" }}}component { $name="org.foo.fundation.gogo.Feli
+ xPlusCommand-factory" $classname="org.foo.fundation.gogo.FelixPlusComma
+ nd" provides { $specifications="{org.foo.fundation.gogo.IGoGoCommand}" 
+ property { $name="osgi.command.function" $field="pCommands" $value="{se
+ rvices,providers,service,references,getservice}" }property { $name="osg
+ i.command.scope" $field="pScope" $value="felix+" }}requires { $field="p
+ Logger" }callback { $transition="invalidate" $method="invalidate" }call
+ back { $transition="validate" $method="validate" }manipulation { $class
+ name="org.foo.fundation.gogo.FelixPlusCommand" $super="org.foo.fundatio
+ n.gogo.GoGoCommand" interface { $name="org.foo.fundation.gogo.IGoGoComm
+ and" }field { $name="pCommands" $type="java.lang.String[]" }field { $na
+ me="pContext" $type="org.osgi.framework.BundleContext" }field { $name="
+ pLogger" $type="org.foo.fundation.ILogger" }field { $name="pScope" $typ
+ e="java.lang.String" }method { $name="getCommands" $return="java.lang.S
+ tring[]" }method { $name="getLogger" $return="org.foo.fundation.ILogger
+ " }method { $name="getservice" $arguments="{int}" $names="{aServiceID}"
+  }method { $name="getservice" $arguments="{java.lang.String}" $names="{
+ aSpecification}" }method { $name="invalidate" }method { $name="printRef
+ erence" $arguments="{org.osgi.framework.ServiceReference}" $names="{aSe
+ rviceReference}" }method { $name="printReferences" $return="java.lang.S
+ tring" $arguments="{org.osgi.framework.ServiceReference[]}" $names="{aS
+ erviceReferences}" }method { $name="providers" $arguments="{java.lang.S
+ tring}" $names="{aSpecification}" }method { $name="references" $argumen
+ ts="{java.lang.String}" $names="{aSpecification}" }method { $name="serv
+ ice" $arguments="{int}" $names="{aServiceId}" }method { $name="services
+ " }method { $name="services" $arguments="{org.osgi.framework.Bundle}" $
+ names="{aBundle}" }method { $name="validate" }inner { $name="1" method 
+ { $name="compare" $return="int" $arguments="{org.osgi.framework.Service
+ Reference,org.osgi.framework.ServiceReference}" $names="{}" }method { $
+ name="compare" $return="int" $arguments="{java.lang.Object,java.lang.Ob
+ ject}" $names="{}" }}}}
 

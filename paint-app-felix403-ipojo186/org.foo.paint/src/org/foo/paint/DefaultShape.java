@@ -51,7 +51,7 @@ import org.osgi.framework.ServiceReference;
  * approach.
  * 
  * @author Richard S. Hall, Karl Pauls, Stuart McCulloch, and David Savage
- * @author isandlaTech
+ * @author ogattaz (cohorte-technologies)
  **/
 class DefaultShape implements ISimpleShape {
 
@@ -59,14 +59,10 @@ class DefaultShape implements ISimpleShape {
 	private static ImageIcon sDefaultIcon;
 	static {
 		try {
-			sDefaultIcon = new ImageIcon(
-					DefaultShape.class.getResource(DEFAULTICON_PNG));
+			sDefaultIcon = new ImageIcon(DefaultShape.class.getResource(DEFAULTICON_PNG));
 		} catch (Exception e) {
-			System.err
-					.println(String
-							.format("ERROR Unable to load the file [%s] from the path [%s]",
-									DEFAULTICON_PNG, DefaultShape.class
-											.getPackage().getName()));
+			System.err.println(String.format("ERROR Unable to load the file [%s] from the path [%s]", DEFAULTICON_PNG,
+					DefaultShape.class.getPackage().getName()));
 		}
 	}
 
@@ -85,20 +81,18 @@ class DefaultShape implements ISimpleShape {
 	/**
 	 * This constructs a proxy shape that lazily gets the shape service.
 	 * 
-	 * @param context
-	 *            The bundle context to use for retrieving the shape service.
-	 * @param aServiceReference
-	 *            The service reference of the service.
+	 * @param context           The bundle context to use for retrieving the shape
+	 *                          service.
+	 * @param aServiceReference The service reference of the service.
 	 **/
-	public DefaultShape(BundleContext context,
-			ServiceReference<ISimpleShape> aServiceReference) {
+	public DefaultShape(BundleContext context, ServiceReference<ISimpleShape> aServiceReference) {
 		pBundleContext = context;
 		pServiceReference = aServiceReference;
 	}
 
 	/**
-	 * This method tells the proxy to dispose of its service object; this is
-	 * called when the underlying service goes away.
+	 * This method tells the proxy to dispose of its service object; this is called
+	 * when the underlying service goes away.
 	 **/
 	public void dispose() {
 		if (pSimpleShape != null) {
@@ -110,15 +104,12 @@ class DefaultShape implements ISimpleShape {
 	}
 
 	/**
-	 * Implements the <tt>SimpleShape</tt> interface method. When acting as a
-	 * proxy, this method gets the shape service and then uses it to draw the
-	 * shape. When acting as a placeholder shape, this method draws the default
-	 * icon.
+	 * Implements the <tt>SimpleShape</tt> interface method. When acting as a proxy,
+	 * this method gets the shape service and then uses it to draw the shape. When
+	 * acting as a placeholder shape, this method draws the default icon.
 	 * 
-	 * @param g2
-	 *            The graphics object used for painting.
-	 * @param p
-	 *            The position to paint the triangle.
+	 * @param g2 The graphics object used for painting.
+	 * @param p  The position to paint the triangle.
 	 **/
 	@Override
 	public void draw(Graphics2D g2, Point p) {

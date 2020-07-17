@@ -20,7 +20,7 @@ package org.foo.paint;
 
 /**
  * @author Richard S. Hall, Karl Pauls, Stuart McCulloch, and David Savage
- * @author isandlaTech
+ * @author ogattaz (cohorte-technologies)
  * 
  */
 public interface IPaintMain {

@@ -25,23 +25,26 @@ import org.osgi.service.log.LogService;
  * 
  */
 public enum ELogLevel {
-	DEBUG(LogService.LOG_DEBUG), ERROR(LogService.LOG_ERROR), INFO(
-			LogService.LOG_INFO), WARNING(LogService.LOG_WARNING);
+	DEBUG(LogService.LOG_DEBUG),
+	//
+	SEVERE(LogService.LOG_ERROR),
+	//
+	INFO(LogService.LOG_INFO),
+	//
+	WARNING(LogService.LOG_WARNING);
 
 	/**
 	 * @param aType
 	 * @return
 	 * @throws EnumConstantNotPresentException
 	 */
-	public static ELogLevel fromValue(int aType)
-			throws EnumConstantNotPresentException {
+	public static ELogLevel fromValue(int aType) throws EnumConstantNotPresentException {
 
 		for (ELogLevel wLogLevel : ELogLevel.values()) {
 			if (wLogLevel.getValue() == aType)
 				return wLogLevel;
 		}
-		throw new EnumConstantNotPresentException(ELogLevel.class,
-				String.format("unknonw level=[%d]", aType));
+		throw new EnumConstantNotPresentException(ELogLevel.class, String.format("unknonw level=[%d]", aType));
 	}
 
 	private final String pLabel;

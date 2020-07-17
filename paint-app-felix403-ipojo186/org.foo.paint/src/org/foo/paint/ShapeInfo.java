@@ -27,13 +27,13 @@ import org.foo.shape.ISimpleShape;
  * available shape.
  * 
  * @author Richard S. Hall, Karl Pauls, Stuart McCulloch, and David Savage
- * @author isandlaTech
+ * @author ogattaz (cohorte-technologies)
  **/
 public class ShapeInfo {
 
-	private final ISimpleShape pShape;
 	private final Icon pIcon;
 	private final String pName;
+	private final ISimpleShape pShape;
 
 	/**
 	 * @param name

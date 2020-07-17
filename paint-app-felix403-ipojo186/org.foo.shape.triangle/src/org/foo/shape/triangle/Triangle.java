@@ -40,7 +40,8 @@ import org.foo.shape.ISimpleShape;
 
 /**
  * @author Richard S. Hall, Karl Pauls, Stuart McCulloch, and David Savage
- * @author isandlaTech
+ * @author ogattaz (cohorte-technologies)
+ * 
  * @see http://felix.apache.org/site/how-to-use-ipojo-annotations.html#
  *      HowtouseiPOJOAnnotations-@Component
  * @see http://felix.apache.org/site/how-to-use-ipojo-annotations.html#
@@ -48,13 +49,14 @@ import org.foo.shape.ISimpleShape;
  * @see http://felix.apache.org/site/how-to-use-ipojo-annotations.html#
  *      HowtouseiPOJOAnnotations-@Instantiate
  */
-@Component
-@Provides
-@Instantiate
+@Component(name = "org.foo.shape.triangle.Triangle-factory")
+@Instantiate(name = "rg.foo.shape.triangle.Triangle")
+@Provides(specifications = { ISimpleShape.class })
 public class Triangle implements ISimpleShape {
 
 	public static final String ICON_PNG = "triangle.png";
-	public static final String TRIANGLE_NAME = "TRIANGLE_NAME";
+
+	public static final String TRIANGLE_NAME = "Triangle";
 
 	private ImageIcon pIcon;
 
@@ -66,12 +68,12 @@ public class Triangle implements ISimpleShape {
 
 	// @see
 	// http://felix.apache.org/site/how-to-use-ipojo-annotations.html#HowtouseiPOJOAnnotations-@ServiceProperty
-	@ServiceProperty(name = ISimpleShape.NAME_PROPERTY, value = "Square")
+	@ServiceProperty(name = ISimpleShape.NAME_PROPERTY, value = TRIANGLE_NAME)
 	private String pName;
 
 	/**
- * 
- */
+	* 
+	*/
 	public Triangle() {
 		super();
 	}
@@ -79,22 +81,18 @@ public class Triangle implements ISimpleShape {
 	/**
 	 * Implements the <tt>SimpleShape.draw()</tt> method for painting the shape.
 	 * 
-	 * @param g2
-	 *            The graphics object used for painting.
-	 * @param p
-	 *            The position to paint the triangle.
+	 * @param g2 The graphics object used for painting.
+	 * @param p  The position to paint the triangle.
 	 **/
 	@Override
 	public void draw(Graphics2D g2, Point p) {
 		int x = p.x - 25;
 		int y = p.y - 25;
-		GradientPaint gradient = new GradientPaint(x, y, Color.GREEN, x + 50,
-				y, Color.WHITE);
+		GradientPaint gradient = new GradientPaint(x, y, Color.GREEN, x + 50, y, Color.WHITE);
 		g2.setPaint(gradient);
 		int[] xcoords = { x + 25, x, x + 50 };
 		int[] ycoords = { y, y + 50, y + 50 };
-		GeneralPath polygon = new GeneralPath(GeneralPath.WIND_EVEN_ODD,
-				xcoords.length);
+		GeneralPath polygon = new GeneralPath(GeneralPath.WIND_EVEN_ODD, xcoords.length);
 		polygon.moveTo(x + 25, y);
 		for (int i = 0; i < xcoords.length; i++) {
 			polygon.lineTo(xcoords[i], ycoords[i]);
@@ -118,8 +116,8 @@ public class Triangle implements ISimpleShape {
 	}
 
 	/**
- * 
- */
+	* 
+	*/
 	@Invalidate
 	public void invalidate() {
 		pName = null;
@@ -128,21 +126,19 @@ public class Triangle implements ISimpleShape {
 	}
 
 	/**
- * 
- */
+	* 
+	*/
 	@Validate
 	public void validate() {
 
-		ResourceBundle wRB = ResourceBundle
-				.getBundle("org.foo.shape.triangle.resource.Localize");
+		ResourceBundle wRB = ResourceBundle.getBundle("org.foo.shape.triangle.resource.Localize");
 
-		pName = wRB.getString(TRIANGLE_NAME);
+		pName = wRB.getString(RB_PROPERTY_SHAPE_NAME);
 
 		pIcon = new ImageIcon(this.getClass().getResource(ICON_PNG));
 
-		pLogger.logInfo(this, "validate",
-				"name=[%s] IconHeight=[%d] IconWidth=[%d]", pName,
-				pIcon.getIconHeight(), pIcon.getIconWidth());
+		pLogger.logInfo(this, "validate", "name=[%s] IconHeight=[%d] IconWidth=[%d]", pName, pIcon.getIconHeight(),
+				pIcon.getIconWidth());
 
 	}
 }

@@ -29,8 +29,8 @@ import org.osgi.framework.FrameworkListener;
  * @see http://felix.apache.org/site/how-to-use-ipojo-annotations.html#
  *      HowtouseiPOJOAnnotations-@Instantiate
  */
-@Component
-@Instantiate
+@Component(name = "org.foo.fundation.OsgiSpyFramework-factory")
+@Instantiate(name = "org.foo.fundation.OsgiSpyFramework")
 public class OsgiSpyFramework implements FrameworkListener {
 
 	private final BundleContext pBundleContext;
@@ -53,8 +53,7 @@ public class OsgiSpyFramework implements FrameworkListener {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * org.osgi.framework.FrameworkListener#frameworkEvent(org.osgi.framework
+	 * @see org.osgi.framework.FrameworkListener#frameworkEvent(org.osgi.framework
 	 * .FrameworkEvent)
 	 */
 	@Override
@@ -62,11 +61,9 @@ public class OsgiSpyFramework implements FrameworkListener {
 
 		String wServiceEventSource = aFrameworkEvent.getSource().toString();
 
-		String wServiceEventTypeName = EFrameworkEventType.fromType(
-				aFrameworkEvent.getType()).name();
+		String wServiceEventTypeName = EFrameworkEventType.fromType(aFrameworkEvent.getType()).name();
 
-		pLogger.logInfo(this, "frameworkEvent", "Event=[%s] Source=[%s]",
-				wServiceEventTypeName, wServiceEventSource);
+		pLogger.logInfo(this, "frameworkEvent", "Event=[%s] Source=[%s]", wServiceEventTypeName, wServiceEventSource);
 	}
 
 	/**
@@ -77,8 +74,7 @@ public class OsgiSpyFramework implements FrameworkListener {
 
 		pBundleContext.removeFrameworkListener(this);
 
-		pLogger.logInfo(this, "invalidate",
-				"OsgiSpyFramework removed as FrameworkListener");
+		pLogger.logInfo(this, "invalidate", "OsgiSpyFramework removed as FrameworkListener");
 	}
 
 	/**
@@ -89,8 +85,6 @@ public class OsgiSpyFramework implements FrameworkListener {
 
 		pBundleContext.addFrameworkListener(this);
 
-		pLogger.logInfo(this, "validate",
-				"OsgiSpyFramework installed as FrameworkListener. [%s]",
-				this.toString());
+		pLogger.logInfo(this, "validate", "OsgiSpyFramework installed as FrameworkListener. [%s]", this.toString());
 	}
 }

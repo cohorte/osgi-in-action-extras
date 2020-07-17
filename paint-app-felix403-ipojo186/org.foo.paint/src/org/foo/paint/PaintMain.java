@@ -44,14 +44,14 @@ import org.osgi.framework.BundleException;
  * will cause the framework to shutdown and the JVM to exit.
  * 
  * @author Richard S. Hall, Karl Pauls, Stuart McCulloch, and David Savage
- * @author isandlaTech
+ * @author ogattaz (cohorte-technologies)
  * 
  * @see http://felix.apache.org/site/how-to-use-ipojo-annotations.html
  * @see //@see http://felix.apache.org/site/ipojo-reference-card.html
  */
-@Component
+@Component(name = "org.foo.paint.PaintMain-factory")
+@Instantiate(name = "org.foo.paint.PaintMain")
 @Provides(specifications = { IPaintMain.class })
-@Instantiate
 public class PaintMain implements Runnable, IPaintMain {
 
 	private final BundleContext pBundleContext;
@@ -99,8 +99,7 @@ public class PaintMain implements Runnable, IPaintMain {
 			SwingUtilities.invokeAndWait(new Runnable() {
 				@Override
 				public void run() {
-					pLogger.logInfo(this, "windowClosing",
-							"set the frame invisible");
+					pLogger.logInfo(this, "windowClosing", "set the frame invisible");
 					wPaintFrame.setVisible(false);
 					wPaintFrame.dispose();
 				}
@@ -113,15 +112,14 @@ public class PaintMain implements Runnable, IPaintMain {
 
 		pPaintFrame = null;
 
-		pLogger.logInfo(this, "invalidate", "bundle=[%s]", getContext()
-				.getBundle().getSymbolicName());
+		pLogger.logInfo(this, "invalidate", "bundle=[%s]", getContext().getBundle().getSymbolicName());
 
 	}
 
 	/**
-	 * This method actually performs the creation of the application window. It
-	 * is intended to be called by the Swing event thread and should not be
-	 * called directly.
+	 * This method actually performs the creation of the application window. It is
+	 * intended to be called by the Swing event thread and should not be called
+	 * directly.
 	 **/
 	@Override
 	public void run() {
@@ -149,18 +147,16 @@ public class PaintMain implements Runnable, IPaintMain {
 	}
 
 	/**
-	 * Displays the applications window and starts service tracking; everything
-	 * is done on the Swing event thread to avoid synchronization and repainting
+	 * Displays the applications window and starts service tracking; everything is
+	 * done on the Swing event thread to avoid synchronization and repainting
 	 * issues.
 	 * 
 	 **/
 	@Validate
 	public void validate() {
 
-		pLogger.logInfo(this, "validate",
-				"Thread=[%s] isEventDispatchThread=[%b]", Thread
-						.currentThread().getName(), SwingUtilities
-						.isEventDispatchThread());
+		pLogger.logInfo(this, "validate", "Thread=[%s] isEventDispatchThread=[%b]", Thread.currentThread().getName(),
+				SwingUtilities.isEventDispatchThread());
 
 		if (SwingUtilities.isEventDispatchThread()) {
 			run();
@@ -172,7 +168,6 @@ public class PaintMain implements Runnable, IPaintMain {
 			}
 		}
 
-		pLogger.logInfo(this, "validate", "bundle=[%s]", getContext()
-				.getBundle().getSymbolicName());
+		pLogger.logInfo(this, "validate", "bundle=[%s]", getContext().getBundle().getSymbolicName());
 	}
 }

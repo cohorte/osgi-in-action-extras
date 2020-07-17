@@ -29,8 +29,8 @@ import org.osgi.framework.BundleListener;
  * @see http://felix.apache.org/site/how-to-use-ipojo-annotations.html#
  *      HowtouseiPOJOAnnotations-@Instantiate
  */
-@Component
-@Instantiate
+@Component(name = "org.foo.fundation.OsgiSpyBundles-factory")
+@Instantiate(name = "org.foo.fundation.OsgiSpyBundles")
 public class OsgiSpyBundles implements BundleListener {
 
 	private final BundleContext pBundleContext;
@@ -59,14 +59,12 @@ public class OsgiSpyBundles implements BundleListener {
 	@Override
 	public void bundleChanged(BundleEvent aBundleEvent) {
 
-		String wBundleEventTypeName = EBundleEventType.fromType(
-				aBundleEvent.getType()).name();
+		String wBundleEventTypeName = EBundleEventType.fromType(aBundleEvent.getType()).name();
 		long wBundleId = aBundleEvent.getBundle().getBundleId();
 		String wBundleName = aBundleEvent.getBundle().getSymbolicName();
 
-		pLogger.logInfo(this, "bundleChanged",
-				"Event=[%s] BundleId=[%d] BundleName=[%s]",
-				wBundleEventTypeName, wBundleId, wBundleName);
+		pLogger.logInfo(this, "bundleChanged", "Event=[%s] BundleId=[%d] BundleName=[%s]", wBundleEventTypeName,
+				wBundleId, wBundleName);
 	}
 
 	/**
@@ -76,8 +74,7 @@ public class OsgiSpyBundles implements BundleListener {
 	public void invalidate() throws Exception {
 
 		pBundleContext.removeBundleListener(this);
-		pLogger.logInfo(this, "invalidate",
-				"OsgiSpyBundles removed as BundleListener");
+		pLogger.logInfo(this, "invalidate", "OsgiSpyBundles removed as BundleListener");
 	}
 
 	/**
@@ -88,9 +85,7 @@ public class OsgiSpyBundles implements BundleListener {
 
 		pBundleContext.addBundleListener(this);
 
-		pLogger.logInfo(this, "validate",
-				"OsgiSpyBundles installed as BundleListener. [%s]",
-				this.toString());
+		pLogger.logInfo(this, "validate", "OsgiSpyBundles installed as BundleListener. [%s]", this.toString());
 
 	}
 }

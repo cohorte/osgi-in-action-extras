@@ -49,10 +49,9 @@ import org.foo.shape.ISimpleShape;
  * eliminate any dependencies on the OSGi application programming interfaces.
  * 
  * @author Richard S. Hall, Karl Pauls, Stuart McCulloch, and David Savage
- * @author isandlaTech
+ * @author ogattaz (cohorte-technologies)
  **/
-public class PaintFrame extends JFrame implements MouseListener,
-		MouseMotionListener {
+public class PaintFrame extends JFrame implements MouseListener, MouseMotionListener {
 
 	/**
 	 * Simple action listener for shape tool bar buttons that sets the drawing
@@ -62,8 +61,7 @@ public class PaintFrame extends JFrame implements MouseListener,
 		/*
 		 * (non-Javadoc)
 		 * 
-		 * @see
-		 * java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent
+		 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent
 		 * )
 		 */
 		@Override
@@ -75,7 +73,7 @@ public class PaintFrame extends JFrame implements MouseListener,
 	private static final int BOX = 54;
 	private static final long serialVersionUID = 1L;
 
-	private final Map<String, ShapeInfo> m_shapes = new HashMap<String, ShapeInfo>();
+	private final Map<String, ShapeInfo> m_shapes = new HashMap<>();
 	private final ISimpleShape pDefaultShape = new DefaultShape();
 	// injected by the constructor
 	private final ILogger pLogger;
@@ -110,18 +108,14 @@ public class PaintFrame extends JFrame implements MouseListener,
 	/**
 	 * Injects an available <tt>SimpleShape</tt> into the drawing frame.
 	 * 
-	 * @param aName
-	 *            The name of the injected <tt>SimpleShape</tt>.
-	 * @param aIcon
-	 *            The icon associated with the injected <tt>SimpleShape</tt>.
-	 * @param aShape
-	 *            The injected <tt>SimpleShape</tt> instance.
+	 * @param aName  The name of the injected <tt>SimpleShape</tt>.
+	 * @param aIcon  The icon associated with the injected <tt>SimpleShape</tt>.
+	 * @param aShape The injected <tt>SimpleShape</tt> instance.
 	 **/
 	public void addShape(String aName, Icon aIcon, ISimpleShape aShape) {
 
-		pLogger.logInfo(this, "addShape",
-				"name=[%s] IconHeight=[%d] IconWidth=[%d]", aName,
-				aIcon.getIconHeight(), aIcon.getIconWidth());
+		pLogger.logInfo(this, "addShape", "name=[%s] IconHeight=[%d] IconWidth=[%d]", aName, aIcon.getIconHeight(),
+				aIcon.getIconWidth());
 
 		m_shapes.put(aName, new ShapeInfo(aName, aIcon, aShape));
 		JButton button = new JButton(aIcon);
@@ -139,11 +133,9 @@ public class PaintFrame extends JFrame implements MouseListener,
 	}
 
 	/**
-	 * Retrieves the available <tt>SimpleShape</tt> associated with the given
-	 * name.
+	 * Retrieves the available <tt>SimpleShape</tt> associated with the given name.
 	 * 
-	 * @param aName
-	 *            The name of the <tt>SimpleShape</tt> to retrieve.
+	 * @param aName The name of the <tt>SimpleShape</tt> to retrieve.
 	 * @return The corresponding <tt>SimpleShape</tt> instance if available or
 	 *         <tt>null</tt>.
 	 **/
@@ -160,8 +152,7 @@ public class PaintFrame extends JFrame implements MouseListener,
 	 * Implements method for the <tt>MouseListener</tt> interface to draw the
 	 * selected shape into the drawing canvas.
 	 * 
-	 * @param aMouseEvent
-	 *            The associated mouse event.
+	 * @param aMouseEvent The associated mouse event.
 	 **/
 	@Override
 	public void mouseClicked(MouseEvent aMouseEvent) {
@@ -171,8 +162,7 @@ public class PaintFrame extends JFrame implements MouseListener,
 
 		if (pPanelMain.contains(aMouseEvent.getX(), aMouseEvent.getY())) {
 			ShapeComponent wShapeComponent = new ShapeComponent(this, pSelected);
-			wShapeComponent.setBounds(aMouseEvent.getX() - BOX / 2,
-					aMouseEvent.getY() - BOX / 2, BOX, BOX);
+			wShapeComponent.setBounds(aMouseEvent.getX() - BOX / 2, aMouseEvent.getY() - BOX / 2, BOX, BOX);
 			pPanelMain.add(wShapeComponent, 0);
 			pPanelMain.validate();
 			pPanelMain.repaint(wShapeComponent.getBounds());
@@ -180,23 +170,20 @@ public class PaintFrame extends JFrame implements MouseListener,
 	}
 
 	/**
-	 * Implements method for the <tt>MouseMotionListener</tt> interface to move
-	 * a dragged shape.
+	 * Implements method for the <tt>MouseMotionListener</tt> interface to move a
+	 * dragged shape.
 	 * 
-	 * @param aMouseEvent
-	 *            The associated mouse event.
+	 * @param aMouseEvent The associated mouse event.
 	 **/
 	@Override
 	public void mouseDragged(MouseEvent aMouseEvent) {
-		pSelectedComponent.setBounds(aMouseEvent.getX() - BOX / 2,
-				aMouseEvent.getY() - BOX / 2, BOX, BOX);
+		pSelectedComponent.setBounds(aMouseEvent.getX() - BOX / 2, aMouseEvent.getY() - BOX / 2, BOX, BOX);
 	}
 
 	/**
 	 * Implements an empty method for the <tt>MouseListener</tt> interface.
 	 * 
-	 * @param aMouseEvent
-	 *            The associated mouse event.
+	 * @param aMouseEvent The associated mouse event.
 	 **/
 	@Override
 	public void mouseEntered(MouseEvent aMouseEvent) {
@@ -205,69 +192,59 @@ public class PaintFrame extends JFrame implements MouseListener,
 	/**
 	 * Implements an empty method for the <tt>MouseListener</tt> interface.
 	 * 
-	 * @param aMouseEvent
-	 *            The associated mouse event.
+	 * @param aMouseEvent The associated mouse event.
 	 **/
 	@Override
 	public void mouseExited(MouseEvent aMouseEvent) {
 	}
 
 	/**
-	 * Implements an empty method for the <tt>MouseMotionListener</tt>
-	 * interface.
+	 * Implements an empty method for the <tt>MouseMotionListener</tt> interface.
 	 * 
-	 * @param aMouseEvent
-	 *            The associated mouse event.
+	 * @param aMouseEvent The associated mouse event.
 	 **/
 	@Override
 	public void mouseMoved(MouseEvent aMouseEvent) {
 	}
 
 	/**
-	 * Implements method for the <tt>MouseListener</tt> interface to initiate
-	 * shape dragging.
+	 * Implements method for the <tt>MouseListener</tt> interface to initiate shape
+	 * dragging.
 	 * 
-	 * @param aMouseEvent
-	 *            The associated mouse event.
+	 * @param aMouseEvent The associated mouse event.
 	 **/
 	@Override
 	public void mousePressed(MouseEvent aMouseEvent) {
 		Component c = pPanelMain.getComponentAt(aMouseEvent.getPoint());
 		if (c instanceof ShapeComponent) {
 			pSelectedComponent = (ShapeComponent) c;
-			pPanelMain
-					.setCursor(Cursor.getPredefinedCursor(Cursor.MOVE_CURSOR));
+			pPanelMain.setCursor(Cursor.getPredefinedCursor(Cursor.MOVE_CURSOR));
 			pPanelMain.addMouseMotionListener(this);
 			pSelectedComponent.repaint();
 		}
 	}
 
 	/**
-	 * Implements method for the <tt>MouseListener</tt> interface to complete
-	 * shape dragging.
+	 * Implements method for the <tt>MouseListener</tt> interface to complete shape
+	 * dragging.
 	 * 
-	 * @param aMouseEvent
-	 *            The associated mouse event.
+	 * @param aMouseEvent The associated mouse event.
 	 **/
 	@Override
 	public void mouseReleased(MouseEvent aMouseEvent) {
 		if (pSelectedComponent != null) {
 			pPanelMain.removeMouseMotionListener(this);
-			pPanelMain.setCursor(Cursor
-					.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
-			pSelectedComponent.setBounds(aMouseEvent.getX() - BOX / 2,
-					aMouseEvent.getY() - BOX / 2, BOX, BOX);
+			pPanelMain.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+			pSelectedComponent.setBounds(aMouseEvent.getX() - BOX / 2, aMouseEvent.getY() - BOX / 2, BOX, BOX);
 			pSelectedComponent.repaint();
 			pSelectedComponent = null;
 		}
 	}
 
 	/**
-	 * Removes a no longer available <tt>SimpleShape</tt> from the drawing
-	 * frame.
+	 * Removes a no longer available <tt>SimpleShape</tt> from the drawing frame.
 	 * 
-	 * @param aMouseEvent
-	 *            The name of the <tt>SimpleShape</tt> to remove.
+	 * @param aMouseEvent The name of the <tt>SimpleShape</tt> to remove.
 	 **/
 	public void removeShape(String aMouseEvent) {
 		m_shapes.remove(aMouseEvent);
@@ -293,11 +270,10 @@ public class PaintFrame extends JFrame implements MouseListener,
 	}
 
 	/**
-	 * This method sets the currently selected shape to be used for drawing on
-	 * the canvas.
+	 * This method sets the currently selected shape to be used for drawing on the
+	 * canvas.
 	 * 
-	 * @param aName
-	 *            The name of the shape to use for drawing on the canvas.
+	 * @param aName The name of the shape to use for drawing on the canvas.
 	 **/
 	public void selectShape(String aName) {
 		pSelected = aName;

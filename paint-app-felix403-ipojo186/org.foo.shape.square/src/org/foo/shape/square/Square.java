@@ -40,7 +40,8 @@ import org.foo.shape.ISimpleShape;
 
 /**
  * @author Richard S. Hall, Karl Pauls, Stuart McCulloch, and David Savage
- * @author isandlaTech
+ * @author ogattaz (cohorte-technologies)
+ * 
  * @see http://felix.apache.org/site/how-to-use-ipojo-annotations.html#
  *      HowtouseiPOJOAnnotations-@Component
  * @see http://felix.apache.org/site/how-to-use-ipojo-annotations.html#
@@ -48,13 +49,13 @@ import org.foo.shape.ISimpleShape;
  * @see http://felix.apache.org/site/how-to-use-ipojo-annotations.html#
  *      HowtouseiPOJOAnnotations-@Instantiate
  */
-@Component
-@Provides
-@Instantiate
+@Component(name = "org.foo.shape.square.Square-factory")
+@Instantiate(name = "rg.foo.shape.square.Square")
+@Provides(specifications = { ISimpleShape.class })
 public class Square implements ISimpleShape {
 
 	public static final String ICON_PNG = "square.png";
-	public static final String SQUARE_NAME = "SQUARE_NAME";
+	public static final String SQUARE_NAME = "Square";
 
 	private ImageIcon pIcon = null;
 
@@ -66,7 +67,7 @@ public class Square implements ISimpleShape {
 
 	// @see
 	// http://felix.apache.org/site/how-to-use-ipojo-annotations.html#HowtouseiPOJOAnnotations-@ServiceProperty
-	@ServiceProperty(name = ISimpleShape.NAME_PROPERTY, value = "Square")
+	@ServiceProperty(name = ISimpleShape.NAME_PROPERTY, value = SQUARE_NAME)
 	private String pName;
 
 	/**
@@ -79,17 +80,14 @@ public class Square implements ISimpleShape {
 	/**
 	 * Implements the <tt>SimpleShape.draw()</tt> method for painting the shape.
 	 * 
-	 * @param g2
-	 *            The graphics object used for painting.
-	 * @param p
-	 *            The position to paint the triangle.
+	 * @param g2 The graphics object used for painting.
+	 * @param p  The position to paint the triangle.
 	 **/
 	@Override
 	public void draw(Graphics2D g2, Point p) {
 		int x = p.x - 25;
 		int y = p.y - 25;
-		GradientPaint gradient = new GradientPaint(x, y, Color.BLUE, x + 50, y,
-				Color.WHITE);
+		GradientPaint gradient = new GradientPaint(x, y, Color.BLUE, x + 50, y, Color.WHITE);
 		g2.setPaint(gradient);
 		g2.fill(new Rectangle2D.Double(x, y, 50, 50));
 		BasicStroke wideStroke = new BasicStroke(2.0f);
@@ -124,15 +122,13 @@ public class Square implements ISimpleShape {
 	@Validate
 	public void validate() {
 
-		ResourceBundle wRB = ResourceBundle
-				.getBundle("org.foo.shape.square.resource.Localize");
+		ResourceBundle wRB = ResourceBundle.getBundle("org.foo.shape.square.resource.Localize");
 
-		pName = wRB.getString(SQUARE_NAME);
+		pName = wRB.getString(RB_PROPERTY_SHAPE_NAME);
 
 		pIcon = new ImageIcon(this.getClass().getResource(ICON_PNG));
 
-		pLogger.logInfo(this, "validate",
-				"name=[%s] IconHeight=[%d] IconWidth=[%d]", pName,
-				pIcon.getIconHeight(), pIcon.getIconWidth());
+		pLogger.logInfo(this, "validate", "name=[%s] IconHeight=[%d] IconWidth=[%d]", pName, pIcon.getIconHeight(),
+				pIcon.getIconWidth());
 	}
 }

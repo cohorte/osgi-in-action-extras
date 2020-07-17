@@ -34,9 +34,9 @@ import org.osgi.service.log.LogService;
  * @see http://felix.apache.org/site/how-to-use-ipojo-annotations.html#
  *      HowtouseiPOJOAnnotations-@Instantiate
  */
-@Component
-@Provides
-@Instantiate
+@Component(name = "org.foo.fundation.Logger-factory")
+@Instantiate(name = "org.foo.fundation.Logger")
+@Provides(specifications = { ILogger.class })
 public class Logger implements ILogger {
 
 	// the name of the binding of array of EventAdmin service
@@ -74,8 +74,8 @@ public class Logger implements ILogger {
 	 * @param aWhat
 	 * @param aInfos
 	 */
-	static String buildLogLine(final Thread aThread, final Object aWho,
-			final CharSequence aWhat, final Object... aInfos) {
+	static String buildLogLine(final Thread aThread, final Object aWho, final CharSequence aWhat,
+			final Object... aInfos) {
 
 		String wLogText = buildLogText(aInfos);
 
@@ -87,10 +87,8 @@ public class Logger implements ILogger {
 	}
 
 	/**
-	 * @param aSB
-	 *            a stringbuffer to be appended
-	 * @param aObjects
-	 *            a table of object
+	 * @param aSB      a stringbuffer to be appended
+	 * @param aObjects a table of object
 	 * @return the given StringBuffer
 	 */
 	static String buildLogText(final Object... aObjects) {
@@ -122,9 +120,7 @@ public class Logger implements ILogger {
 		// if the first object is a format, return the result of the
 		// String.format() method
 		if (aObjects[0].toString().indexOf('%') > -1) {
-			return wSB.append(
-					String.format(aObjects[0].toString(),
-							UtilsArray.removeOneObject(aObjects, 0)))
+			return wSB.append(String.format(aObjects[0].toString(), UtilsArray.removeOneObject(aObjects, 0)))
 					.toString();
 		}
 
@@ -169,8 +165,7 @@ public class Logger implements ILogger {
 		}
 
 		return new StringBuffer().append(aWho.getClass().getName()).append('_')
-				.append(UtilsString.strAdjustRight(aWho.hashCode(), 4))
-				.toString();
+				.append(UtilsString.strAdjustRight(aWho.hashCode(), 4)).toString();
 	}
 
 	/**
@@ -179,8 +174,7 @@ public class Logger implements ILogger {
 	 * @param aText
 	 * @return
 	 */
-	static String formatLine(final String aThreadName,
-			final String aSourceClassName, final String aSourceMethodName,
+	static String formatLine(final String aThreadName, final String aSourceClassName, final String aSourceMethodName,
 			final String aText) {
 
 		// clean the buffer
@@ -235,9 +229,8 @@ public class Logger implements ILogger {
 	 */
 	static String formatWhat(final String aMethod) {
 
-		return UtilsString.strAdjustRight(
-				aMethod != null ? aMethod.replace(SEP_COLUMN, REPLACE_COLUMN)
-						: EMPTY, LENGTH_WHAT, ' ');
+		return UtilsString.strAdjustRight(aMethod != null ? aMethod.replace(SEP_COLUMN, REPLACE_COLUMN) : EMPTY,
+				LENGTH_WHAT, ' ');
 
 	}
 
@@ -247,10 +240,8 @@ public class Logger implements ILogger {
 	 */
 	static String formatWho(final String aWho) {
 
-		return UtilsString
-				.strAdjustRight(
-						aWho != null ? aWho.replace(SEP_COLUMN, REPLACE_COLUMN)
-								: EMPTY, LENGTH_WHO, ' ');
+		return UtilsString.strAdjustRight(aWho != null ? aWho.replace(SEP_COLUMN, REPLACE_COLUMN) : EMPTY, LENGTH_WHO,
+				' ');
 
 	}
 
@@ -278,8 +269,7 @@ public class Logger implements ILogger {
 	 *      HowtouseiPOJOAnnotations-@Bind
 	 */
 	@Bind(id = BINDIND_ID_LOGREADER)
-	public void bindLogReaderService(LogReaderService aLogReaderService,
-			Dictionary<?, ?> properties) {
+	public void bindLogReaderService(LogReaderService aLogReaderService, Dictionary<?, ?> properties) {
 
 		pLogReaderService.addLogListener(pLogWriterStdout);
 		logInfo(this, "bindLogReaderService", "%s", properties);
@@ -293,8 +283,7 @@ public class Logger implements ILogger {
 	 *      HowtouseiPOJOAnnotations-@Bind
 	 */
 	@Bind(id = BINDIND_ID_LOGSERVICE)
-	public void bindLogService(LogService aLogService,
-			Dictionary<?, ?> properties) {
+	public void bindLogService(LogService aLogService, Dictionary<?, ?> properties) {
 
 		setLogServiceAvailable(true);
 		logInfo(this, "bindLogService", "%s", properties);
@@ -308,8 +297,7 @@ public class Logger implements ILogger {
 	@Invalidate
 	public void invalidate() throws Exception {
 
-		logInfo(this, "invalidate", "isLogServiceAvailable=[%b]",
-				isLogServiceAvailable());
+		logInfo(this, "invalidate", "isLogServiceAvailable=[%b]", isLogServiceAvailable());
 	}
 
 	/*
@@ -372,15 +360,12 @@ public class Logger implements ILogger {
 	 * java.lang.CharSequence, java.lang.Object[])
 	 */
 	@Override
-	public void log(int aLevel, Object aWho, CharSequence aWhat,
-			Object... aInfos) {
+	public void log(int aLevel, Object aWho, CharSequence aWhat, Object... aInfos) {
 
 		if (isLogServiceAvailable())
-			pLogService.log(aLevel,
-					buildLogLine(Thread.currentThread(), aWho, aWhat, aInfos));
+			pLogService.log(aLevel, buildLogLine(Thread.currentThread(), aWho, aWhat, aInfos));
 		else
-			pLogWriterStdout.logged(aLevel,
-					buildLogLine(Thread.currentThread(), aWho, aWhat, aInfos));
+			pLogWriterStdout.logged(aLevel, buildLogLine(Thread.currentThread(), aWho, aWhat, aInfos));
 	}
 
 	/*
@@ -456,8 +441,7 @@ public class Logger implements ILogger {
 	 *      HowtouseiPOJOAnnotations-@Unbind
 	 */
 	@Unbind(id = BINDIND_ID_LOGREADER)
-	public void unbindLogReaderService(LogReaderService aLogReaderService,
-			Dictionary<?, ?> properties) {
+	public void unbindLogReaderService(LogReaderService aLogReaderService, Dictionary<?, ?> properties) {
 
 		logInfo(this, "unbindLogReaderService", "%s", properties);
 		aLogReaderService.removeLogListener(pLogWriterStdout);
@@ -471,8 +455,7 @@ public class Logger implements ILogger {
 	 *      HowtouseiPOJOAnnotations-@Unbind
 	 */
 	@Unbind(id = BINDIND_ID_LOGSERVICE)
-	public void unbindLogService(LogService aLogService,
-			Dictionary<?, ?> properties) {
+	public void unbindLogService(LogService aLogService, Dictionary<?, ?> properties) {
 
 		logInfo(this, "unbindLogService", "%s", properties);
 		setLogServiceAvailable(false);
@@ -486,7 +469,6 @@ public class Logger implements ILogger {
 	@Validate
 	public void validate() throws Exception {
 
-		logInfo(this, "validate", "isLogServiceAvailable=[%b]",
-				isLogServiceAvailable());
+		logInfo(this, "validate", "isLogServiceAvailable=[%b]", isLogServiceAvailable());
 	}
 }

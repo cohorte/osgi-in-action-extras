@@ -24,32 +24,39 @@ import java.awt.Point;
 import javax.swing.ImageIcon;
 
 /**
- * This interface defines the <tt>SimpleShape</tt> service. This service is used
- * to draw shapes. It has two service properties:
- * <ul>
- * <li>simple.shape.name - A <tt>String</tt> name for the shape.</li>
- * <li>simple.shape.icon - An <tt>Icon</tt> for the shape.</li>
- * </ul>
+ * @author Richard S. Hall, Karl Pauls, Stuart McCulloch, and David Savage
+ * @author ogattaz (cohorte-technologies)
+ * 
+ *         This interface defines the <tt>SimpleShape</tt> service. This service
+ *         is used to draw shapes. It has two service properties:
+ *         <ul>
+ *         <li>simple.shape.name - A <tt>String</tt> name for the shape.</li>
+ *         <li>simple.shape.icon - An <tt>Icon</tt> for the shape.</li>
+ *         </ul>
  **/
 public interface ISimpleShape {
 
 	/**
 	 * A service property for the icon of the shape.
 	 **/
-	public static final String ICON_PROPERTY = "simple.shape.icon";
+	String ICON_PROPERTY = "simple.shape.icon";
 
 	/**
 	 * A service property for the name of the shape.
 	 **/
-	public static final String NAME_PROPERTY = "simple.shape.name";
+	String NAME_PROPERTY = "simple.shape.name";
+
+	/**
+	 * name of the standardized property available in the ResourceBundle of each
+	 * Shape bundle
+	 */
+	String RB_PROPERTY_SHAPE_NAME = "SHAPE_NAME";
 
 	/**
 	 * Draw this shape at the given position.
 	 * 
-	 * @param g2
-	 *            The graphics object used for painting.
-	 * @param p
-	 *            The position to paint the shape.
+	 * @param g2 The graphics object used for painting.
+	 * @param p  The position to paint the shape.
 	 **/
 	public void draw(Graphics2D g2, Point p);
 

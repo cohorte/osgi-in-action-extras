@@ -29,8 +29,8 @@ import org.osgi.framework.ServiceListener;
  * @see http://felix.apache.org/site/how-to-use-ipojo-annotations.html#
  *      HowtouseiPOJOAnnotations-@Instantiate
  */
-@Component
-@Instantiate
+@Component(name = "org.foo.fundation.OsgiSpyServices-factory")
+@Instantiate(name = "org.foo.fundation.OsgiSpyServices")
 public class OsgiSpyServices implements ServiceListener {
 
 	private final BundleContext pBundleContext;
@@ -57,15 +57,13 @@ public class OsgiSpyServices implements ServiceListener {
 	public void invalidate() throws Exception {
 
 		pBundleContext.removeServiceListener(this);
-		pLogger.logInfo(this, "invalidate",
-				"OsgiSpyServices removed as ServiceListener");
+		pLogger.logInfo(this, "invalidate", "OsgiSpyServices removed as ServiceListener");
 	}
 
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * org.osgi.framework.ServiceListener#serviceChanged(org.osgi.framework.
+	 * @see org.osgi.framework.ServiceListener#serviceChanged(org.osgi.framework.
 	 * ServiceEvent)
 	 */
 	@Override
@@ -73,14 +71,10 @@ public class OsgiSpyServices implements ServiceListener {
 
 		String wServiceEventSource = aServiceEvent.getSource().toString();
 
-		String wServiceEventTypeName = EServiceEventType.fromType(
-				aServiceEvent.getType()).name();
+		String wServiceEventTypeName = EServiceEventType.fromType(aServiceEvent.getType()).name();
 
-		pLogger.logInfo(this, "serviceChanged",
-				"Event=[%s] Source=[%s] Properties=[%s]",
-				wServiceEventTypeName, wServiceEventSource, UtilsOsgi
-						.dumpServiceProperties(aServiceEvent
-								.getServiceReference()));
+		pLogger.logInfo(this, "serviceChanged", "Event=[%s] Source=[%s] Properties=[%s]", wServiceEventTypeName,
+				wServiceEventSource, UtilsOsgi.dumpServiceProperties(aServiceEvent.getServiceReference()));
 	}
 
 	/**
@@ -91,9 +85,7 @@ public class OsgiSpyServices implements ServiceListener {
 
 		pBundleContext.addServiceListener(this);
 
-		pLogger.logInfo(this, "validate",
-				"OsgiSpyServices installed as ServiceListener. [%s]",
-				this.toString());
+		pLogger.logInfo(this, "validate", "OsgiSpyServices installed as ServiceListener. [%s]", this.toString());
 
 	}
 }

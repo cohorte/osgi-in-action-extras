@@ -12,7 +12,7 @@
 package org.foo.fundation;
 
 /**
- * @author ogattaz
+ * @author ogattaz (cohorte-technologies)
  * 
  */
 public class UtilsString {
@@ -25,8 +25,7 @@ public class UtilsString {
 	 * @param aLeadingChar
 	 * @return
 	 */
-	public static String strAdjustLeft(String aValue, final int aLen,
-			final char aLeadingChar) {
+	public static String strAdjustLeft(String aValue, final int aLen, final char aLeadingChar) {
 
 		if (aValue == null) {
 			aValue = EMPTY;
@@ -67,8 +66,7 @@ public class UtilsString {
 	 * @param aLeadingChar
 	 * @return
 	 */
-	public static String strAdjustRight(String aValue, int aLen,
-			char aLeadingChar) {
+	public static String strAdjustRight(String aValue, int aLen, char aLeadingChar) {
 
 		if (aValue == null) {
 			aValue = EMPTY;

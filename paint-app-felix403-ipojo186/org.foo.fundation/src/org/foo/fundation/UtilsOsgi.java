@@ -14,7 +14,7 @@ package org.foo.fundation;
 import org.osgi.framework.ServiceReference;
 
 /**
- * @author isandlaTech
+ * @author ogattaz (cohorte-technologies)
  * 
  */
 public class UtilsOsgi {
@@ -25,13 +25,12 @@ public class UtilsOsgi {
 	 * @param aServiceReference
 	 * @return
 	 */
-	public static String dumpServiceProperties(
-			ServiceReference<?> aServiceReference) {
+	public static String dumpServiceProperties(ServiceReference<?> aServiceReference) {
 
 		StringBuilder wSB = new StringBuilder();
 		for (String wKey : aServiceReference.getPropertyKeys()) {
-			wSB.append(String.format(" %s=[%s]", wKey, aServiceReference
-					.getProperty(wKey).toString().replace('\n', '¤')));
+			wSB.append(
+					String.format(" %s=[%s]", wKey, aServiceReference.getProperty(wKey).toString().replace('\n', 'ï¿½')));
 		}
 		return wSB.toString();
 	}
